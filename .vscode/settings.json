@@ -1,0 +1,10 @@
+{
+  "editor.tabSize": 2,
+  "emmet.includeLanguages": {
+    "javascript": "javascriptreact"
+  },
+  "emmet.excludeLanguages": [
+
+    "markdown"
+  ]
+}
