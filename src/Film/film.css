@@ -32,12 +32,21 @@ button {
   color: #FFFFFF;
   border: none;
   border-radius: 3px;
-  padding: 11px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.time-container > div {
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .time-container button {
   margin-right: 8px;
   margin-bottom: 10px;
+  width: 83px;
+  height: 43px;
 }
 
 footer {

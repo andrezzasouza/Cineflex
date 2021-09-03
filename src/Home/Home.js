@@ -11,11 +11,15 @@ export default function Home () {
 
   const [film, setFilm] = useState([]);
 
-  const promise = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v3/cineflex/movies');
+  useEffect(() => {
+    const promise = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v3/cineflex/movies');
 
-  promise.then(response => {
+    promise.then(response => {
     setFilm(response.data)
   })
+  }, []);
+
+  
 
   return (
     <div className="home-container">
@@ -25,7 +29,7 @@ export default function Home () {
       <main>
         {film.map(poster => 
           <Link to={`/sessoes/${poster.id}`}>
-            <FilmPoster img={poster.posterURL} alt={poster.title} />
+            <FilmPoster img={poster.posterURL} alt={poster.title} key={poster.id} />
           </Link>
         )}
       </main>

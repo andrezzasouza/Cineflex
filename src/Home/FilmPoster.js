@@ -1,5 +1,3 @@
-import { Link } from "react-router-dom"
-
 // pegar imagem do axios por props?
 // pegar link por props?
 

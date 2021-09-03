@@ -6,7 +6,6 @@ import Home from './Home/Home';
 import Film from './Film/Film';
 import Session from './Session/Session';
 import Success from './Success/Success';
-import axios from 'axios';
 
 function App() {
 
@@ -14,18 +13,18 @@ function App() {
     <BrowserRouter>
       <Header />
       <Switch>
-        {/* <Route path="" exact>
+        <Route path="/" exact>
           <Home />
-        </Route> */}
-        {/* <Route path="" exact>
+        </Route>
+        <Route path="/sessoes/:idFilm" exact>
           <Film />
-        </Route> */}
-        <Route path="" exact>
+        </Route>
+        <Route path="/assentos/:idSession" exact>
           <Session />
         </Route>
-        {/* <Route path="" exact>
+        <Route path="/success" exact>
           <Success />
-        </Route> */}
+        </Route>
       </Switch>
     </BrowserRouter>
   );
