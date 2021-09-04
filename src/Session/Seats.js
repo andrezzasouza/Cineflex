@@ -1,11 +1,11 @@
 export default function Seats ( {array} ) {
-
-  
-  return(
-    console.log("seats", array)
+  let seatStatus = array.isAvailable;
+  console.log("seats", array)
+  return (
+    <div
+      className={seatStatus === true ? `seat available` : `seat unavailable`}
+    >
+      <p className="seat-number">{array.name}</p>
+    </div>
   );
-    // <div {array.seats.isAvailable ? className="seat available" : className="seat unavailable"}>
-    //   <p className="seat-number">{array.seats.name}</p>
-    // </div>
-  
 }

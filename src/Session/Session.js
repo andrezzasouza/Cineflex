@@ -56,7 +56,10 @@ export default function Session () {
         <p>
           Nome do comprador:
         </p>
-        <input type="text" placeholder="Digite seu nome..." />
+        <input 
+          type="text" 
+          placeholder="Digite seu nome..." 
+        />
         <p>
           CPF do comprador:
         </p>
