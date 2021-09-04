@@ -8,21 +8,46 @@ export default function Session () {
 
   const { idSession } = useParams();
 
-  const [selectedSeats, setSelectedSeats] = useState(null);
+  const [allSeats, setAllSeats] = useState(null);
+  const [selectedSeats, setSelectedSeats] = useState([])
+  const [username, setUsername] = useState("");
+  const [userDocument, setUserDocument] = useState("");
+
   useEffect(() => {
     const promise = axios.get(
       `https://mock-api.bootcamp.respondeai.com.br/api/v3/cineflex/showtimes/${idSession}/seats`
     );
 
     promise.then(res => {
-      console.log("resdata2", res.data);
-      setSelectedSeats({...res.data});
+      // console.log("resdata2", res.data);
+      setAllSeats({...res.data});
     })
 
   }, []);
 
-  if (selectedSeats === null) {
+  if (allSeats === null) {
     return "Loading...";
+  }
+
+  function sendBuyerData() {
+    //pegar dados pra envio
+      //assentos
+
+    const reservation = {
+      // ids: [1, 2, 3],
+      name: username,
+      cpf: userDocument,
+    };
+
+    console.log(reservation)
+    // mandar dados pro servidor
+
+    // const promise = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v3/cineflex/seats/book-many', reservation)
+    // limpar campos
+    setUsername("");
+    setUserDocument("");
+      //limpa os assentos selecionados também ou não faz diferença?
+    // ver como mandar os dados pra tela de confirmação
   }
 
   return (
@@ -31,8 +56,12 @@ export default function Session () {
         <h2>Selecione o(s) assento(s)</h2>
       </div>
       <div className="select-seat">
-        {selectedSeats.seats.map(seat =>
-          <Seats array={seat} />
+        {allSeats.seats.map((seat, index) =>
+          <Seats 
+            array={seat}
+            key={index}
+            state={setSelectedSeats}
+          />
         )}
       </div>
       <div className="subtitles">
@@ -59,6 +88,8 @@ export default function Session () {
         <input 
           type="text" 
           placeholder="Digite seu nome..." 
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
         />
         <p>
           CPF do comprador:
@@ -66,24 +97,29 @@ export default function Session () {
         <input 
           type="text" 
           placeholder="Digite seu CPF..." 
+          value={userDocument}
+          onChange={(e) => setUserDocument(e.target.value)}
         />
       </div>
-      <button className="save-seats">
+      <button 
+        className="save-seats" 
+        onClick={sendBuyerData}
+      >
         Reservar assento(s)
       </button>
       <footer>
         <div className="selected-poster">
           <img 
-            src={selectedSeats.movie.posterURL} 
-            alt={`Poster do filme ${selectedSeats.movie.title}`} 
+            src={allSeats.movie.posterURL} 
+            alt={`Poster do filme ${allSeats.movie.title}`} 
           />
         </div>
         <div>
           <p>
-            {selectedSeats.movie.title}
+            {allSeats.movie.title}
           </p>
           <p>
-            {selectedSeats.day.weekday} - {selectedSeats.name}
+            {allSeats.day.weekday} - {allSeats.name}
           </p>
         </div>
       </footer>
