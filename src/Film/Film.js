@@ -22,7 +22,7 @@ export default function Film () {
   }, []);
 
   if(filmData === null) {
-		return "Loading";
+		return "Loading...";
 	}
 
   // console.log("data", data)
@@ -30,12 +30,15 @@ export default function Film () {
   return (
     <div className="film-container">
       <div className="page-title">
-        <h2>Selecione o horário</h2>
+        <h2>
+          Selecione o horário
+        </h2>
       </div>
-      {console.log("fD", filmData)}
-      {filmData.days.map(sessions =>
-        <FilmTime array={filmData} />
-      )}
+      <div className="time-container">
+        {filmData.days.map(sessions =>
+          <FilmTime array={sessions} />
+        )}
+      </div>
       <footer>
         <div className="selected-poster">
           <img src={filmData.posterURL} alt={`Poster do filme ${filmData.title}`} />

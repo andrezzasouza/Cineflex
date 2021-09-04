@@ -1,51 +1,39 @@
 import './session.css'
+import axios from 'axios';
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import Seats from './Seats';
 
 export default function Session () {
+
+  const { idSession } = useParams();
+
+  const [selectedSeats, setSelectedSeats] = useState(null);
+  useEffect(() => {
+    const promise = axios.get(
+      `https://mock-api.bootcamp.respondeai.com.br/api/v3/cineflex/showtimes/${idSession}/seats`
+    );
+
+    promise.then(res => {
+      console.log("resdata2", res.data);
+      setSelectedSeats({...res.data});
+    })
+
+  }, []);
+
+  if (selectedSeats === null) {
+    return "Loading...";
+  }
+
   return (
     <div className="session-container">
       <div className="page-title">
         <h2>Selecione o(s) assento(s)</h2>
       </div>
       <div className="select-seat">
-        <div className="seat available">
-          <p className="seat-number">01</p>
-        </div>
-        <div className="seat available">
-          <p className="seat-number">01</p>
-        </div>
-        <div className="seat available">
-          <p className="seat-number">01</p>
-        </div>
-        <div className="seat available">
-          <p className="seat-number">01</p>
-        </div>
-        <div className="seat available">
-          <p className="seat-number">01</p>
-        </div>
-        <div className="seat available">
-          <p className="seat-number">01</p>
-        </div>
-        <div className="seat available">
-          <p className="seat-number">01</p>
-        </div>
-        <div className="seat available">
-          <p className="seat-number">01</p>
-        </div>
-        <div className="seat available">
-          <p className="seat-number">01</p>
-        </div>
-        <div className="seat available">
-          <p className="seat-number">01</p>
-        </div>
-        <div className="seat available">
-          <p className="seat-number">01</p>
-        </div>
-        <div className="seat available">
-          <p className="seat-number">01</p>
-        </div>
-        <div className="seat available">
-          <p className="seat-number">01</p>
-        </div>
+        {selectedSeats.seats.map(seat =>
+          <Seats array={seat} />
+        )}
       </div>
       <div className="subtitles">
         <div>
@@ -72,21 +60,27 @@ export default function Session () {
         <p>
           CPF do comprador:
         </p>
-        <input type="text" placeholder="Digite seu CPF..." />
+        <input 
+          type="text" 
+          placeholder="Digite seu CPF..." 
+        />
       </div>
       <button className="save-seats">
         Reservar assento(s)
       </button>
       <footer>
         <div className="selected-poster">
-          <img src="" alt="" />
+          <img 
+            src={selectedSeats.movie.posterURL} 
+            alt={`Poster do filme ${selectedSeats.movie.title}`} 
+          />
         </div>
         <div>
           <p>
-            Enola Holmes
+            {selectedSeats.movie.title}
           </p>
           <p>
-            Quinta-feira - 15:00
+            {selectedSeats.day.weekday} - {selectedSeats.name}
           </p>
         </div>
       </footer>

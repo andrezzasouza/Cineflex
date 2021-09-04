@@ -13,14 +13,13 @@
 }
 
 .time-container {
-  margin-bottom: 23px;
+  margin-bottom: 150px;
 }
 
 h3 {
   font-size: 20px;
   line-height: 23px;
   letter-spacing: 0.02em;
-  margin-bottom: 25px;
 }
 
 button {
@@ -40,6 +39,7 @@ button {
 .time-container > div {
   display: flex;
   flex-wrap: wrap;
+  margin-bottom: 23px;
 }
 
 .time-container button {

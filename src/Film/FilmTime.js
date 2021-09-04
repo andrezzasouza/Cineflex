@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
+import Button from './Button.js'
 
-export default function FilmTime ({array}) {
+export default function FilmTime ( {array} ) {
 
   console.log("props", array)
   // console.log("pA", props.array);
@@ -10,23 +11,18 @@ export default function FilmTime ({array}) {
   // const idSession = props.array.array.showtimes.id;
   
 
-  return(
-    <div className="time-container">
-      {array.days.map(day =>
-        <div>
-          <h3>
-            {day.weekday}
-          </h3>
-          
-          {day.showtimes.map(hours =>
-            <Link to={`/assentos/${hours.id}`}>
-              <button>
-                {hours.name}
-              </button>
-            </Link>
-          )}
-        </div>
-      )}
-  </div>    
+  return (
+    <>
+      <div>
+        <h3>{`${array.weekday} - ${array.date}`}</h3>
+      </div>
+      <div>
+        {array.showtimes.map((hours) => (
+          <Link to={`/assentos/${hours.id}`}>
+            <Button hours={hours.name} />
+          </Link>
+        ))}
+      </div>
+    </>
   );
 }
