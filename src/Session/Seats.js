@@ -8,7 +8,7 @@ export default function Seats({
   setSelectedArray,
 }) {
   let seatStatus = array.isAvailable;
-  // console.log("seats", array)
+  console.log("seats", array)
   // console.log("e1", selectedArray)
 
   const [currentState, setCurrentState] = useState(
@@ -30,7 +30,7 @@ export default function Seats({
       const removeReservation = selectedSeats.filter(el => el !== seat);
       setSelectedSeats(removeReservation);
 
-      const removeSelection = selectedArray.filter(el => el !== Number(e.target.innerText))
+      const removeSelection = selectedArray.filter(el => el !== Number(e.target.innerText));
       setSelectedArray(removeSelection);
       
     }
@@ -50,7 +50,7 @@ export default function Seats({
       className={currentState}
       onClick={seatStatus ? (e) => alterState(e, array.id) : alreadyChosen}
     >
-      <p className="seat-number">{array.name}</p>
+      <p className="seat-number">{Number(array.name) >= 10 ? array.name : `0${array.name}`}</p>
     </div>
   );
 }

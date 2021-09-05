@@ -30,12 +30,13 @@ export default function Session ( { setConfirmation, selectedArray, setSelectedA
     return "Loading...";
   }
 
-  function sendBuyerData() {
-    //pegar dados pra envio
-      //assentos
+  
 
+  function sendBuyerData() {
+    const orderedSeats = selectedSeats.sort((a, b) => a - b);
+  
     const reservation = {
-      // ids: [1, 2, 3],
+      ids: orderedSeats,
       name: username,
       cpf: userDocument,
     };
@@ -52,12 +53,11 @@ export default function Session ( { setConfirmation, selectedArray, setSelectedA
     setConfirmation(order)
 
     console.log(reservation)
-    // mandar dados pro servidor
-
-    // const promise = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v3/cineflex/seats/book-many', reservation)
+    const promise = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v3/cineflex/seats/book-many', reservation)
     // limpar campos
     setUsername("");
     setUserDocument("");
+    setSelectedSeats([]);
       //limpa os assentos selecionados também ou não faz diferença?
   }
 

@@ -1,7 +1,15 @@
 import './success.css';
 import { Link } from 'react-router-dom';
 
-export default function Success ( { confirmation, selectedArray }) {
+export default function Success ( { confirmation, selectedArray, setSelectedArray }) {
+
+  const seatsArray = confirmation.seats.sort((a, b) => a - b);
+
+  const newSeatsArray = seatsArray.map(orderedSeat => orderedSeat >= 10 ? orderedSeat : `0${orderedSeat}`);
+
+  function clearSeats () {
+    setSelectedArray([]);
+  }
 
   console.log("conf", confirmation)  
   return (
@@ -16,7 +24,7 @@ export default function Success ( { confirmation, selectedArray }) {
       </div>
       <div className="seat-data">
         <h3>Ingressos</h3>
-        {confirmation.seats.map((seat, index) =>
+        {newSeatsArray.map((seat, index) =>
          <p key={index}>Assento {seat}</p>
         )}
       </div>
@@ -32,7 +40,7 @@ export default function Success ( { confirmation, selectedArray }) {
         </p>
       </div>
       <Link to="/">
-        <button>
+        <button onClick={clearSeats}>
           Voltar pra Home
         </button>
       </Link>

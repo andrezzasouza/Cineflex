@@ -32,9 +32,10 @@ function App() {
           />
         </Route>
         <Route path="/sucesso" exact>
-          <Success 
-            confirmation={confirmation} 
-            selectedArray={selectedArray} 
+          <Success
+            confirmation={confirmation}
+            selectedArray={selectedArray}
+            setSelectedArray={setSelectedArray}
           />
         </Route>
       </Switch>
