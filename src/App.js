@@ -1,5 +1,5 @@
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-
+import { useState } from 'react';
 import './App.css';
 import Header from './Header';
 import Home from './Home/Home';
@@ -7,7 +7,11 @@ import Film from './Film/Film';
 import Session from './Session/Session';
 import Success from './Success/Success';
 
+
+
 function App() {
+
+  const [confirmation, setConfirmation] = useState({});
 
   return (
     <BrowserRouter>
@@ -20,10 +24,14 @@ function App() {
           <Film />
         </Route>
         <Route path="/assentos/:idSession" exact>
-          <Session />
+          <Session 
+            setConfirmation={setConfirmation} 
+          />
         </Route>
-        <Route path="/success" exact>
-          <Success />
+        <Route path="/sucesso" exact>
+          <Success 
+            confirmation={confirmation} 
+          />
         </Route>
       </Switch>
     </BrowserRouter>

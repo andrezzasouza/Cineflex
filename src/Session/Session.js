@@ -1,15 +1,17 @@
 import './session.css'
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import Seats from './Seats';
 
-export default function Session () {
+export default function Session ( { setConfirmation} ) {
 
   const { idSession } = useParams();
 
   const [allSeats, setAllSeats] = useState(null);
   const [selectedSeats, setSelectedSeats] = useState([])
+
+  //talvez subir pro App?
   const [username, setUsername] = useState("");
   const [userDocument, setUserDocument] = useState("");
 
@@ -19,7 +21,7 @@ export default function Session () {
     );
 
     promise.then(res => {
-      // console.log("resdata2", res.data);
+      console.log("resdata2", res.data);
       setAllSeats({...res.data});
     })
 
@@ -38,6 +40,17 @@ export default function Session () {
       name: username,
       cpf: userDocument,
     };
+
+    const order = {
+      movie: allSeats.movie.title,
+      date: allSeats.day.date,
+      hour: allSeats.name,
+      seats: [98, 99],
+      name: username,
+      cpf: userDocument,
+    };
+
+    setConfirmation(order)
 
     console.log(reservation)
     // mandar dados pro servidor
@@ -101,12 +114,14 @@ export default function Session () {
           onChange={(e) => setUserDocument(e.target.value)}
         />
       </div>
-      <button 
-        className="save-seats" 
-        onClick={sendBuyerData}
-      >
-        Reservar assento(s)
-      </button>
+      <Link to="/sucesso">
+        <button 
+          className="save-seats" 
+          onClick={sendBuyerData}
+        >
+          Reservar assento(s)
+        </button>
+      </Link>
       <footer>
         <div className="selected-poster">
           <img 

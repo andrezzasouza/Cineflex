@@ -1,26 +1,39 @@
+import { useState } from "react";
+
 export default function Seats ( {array} ) {
   let seatStatus = array.isAvailable;
   // console.log("seats", array)
 
-  const clickedSeats = [];
+  // talvez vou precisar do useEffect pra evitar que um assento seja desmarcado quando clicar em outro
+
+  const [currentState, setCurrentState] = useState(seatStatus ? `seat` : `seat unavailable`)
+  const [selectedArray, setSelectedArray] = useState([]);
+  
 
   function alterState(e, seat) {
-    //selecionar item
-    //remover seleção
-    console.log("se", seat)
-    clickedSeats.push(e.target.innerText)
-    console.log("e", clickedSeats);
+
+    if (currentState === `seat`) {
+      setCurrentState(`seat selected`);
+      console.log("se", seat);
+      const newSelection = [...selectedArray, Number(e.target.innerText)];
+      setSelectedArray(newSelection);
+      // criar array com os selecionados
+    } else {
+      setCurrentState(`seat`)
+      // remover assento do array de assentos selecionados
+    }   
   }
-  console.log("e2", clickedSeats);
+
+  console.log("e3", selectedArray);
 
   function alreadyChosen() {
-
+    alert("Esse assento não está disponível. Favor escolher um assento disponível.")
   }
 
   return (
     <div
-      className={seatStatus ? `seat` : `seat unavailable`}
-      onClick={seatStatus === true ? alreadyChosen : (e) => alterState(e, array.id))}
+      className={currentState}
+      onClick={seatStatus ? (e) => alterState(e, array.id) : alreadyChosen}
     >
       <p className="seat-number">{array.name}</p>
     </div>
