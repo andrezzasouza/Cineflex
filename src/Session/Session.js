@@ -4,14 +4,13 @@ import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import Seats from './Seats';
 
-export default function Session ( { setConfirmation} ) {
+export default function Session ( { setConfirmation, selectedArray, setSelectedArray} ) {
 
   const { idSession } = useParams();
 
   const [allSeats, setAllSeats] = useState(null);
   const [selectedSeats, setSelectedSeats] = useState([])
 
-  //talvez subir pro App?
   const [username, setUsername] = useState("");
   const [userDocument, setUserDocument] = useState("");
 
@@ -45,7 +44,7 @@ export default function Session ( { setConfirmation} ) {
       movie: allSeats.movie.title,
       date: allSeats.day.date,
       hour: allSeats.name,
-      seats: [98, 99],
+      seats: selectedArray,
       name: username,
       cpf: userDocument,
     };
@@ -60,7 +59,6 @@ export default function Session ( { setConfirmation} ) {
     setUsername("");
     setUserDocument("");
       //limpa os assentos selecionados também ou não faz diferença?
-    // ver como mandar os dados pra tela de confirmação
   }
 
   return (
@@ -69,70 +67,61 @@ export default function Session ( { setConfirmation} ) {
         <h2>Selecione o(s) assento(s)</h2>
       </div>
       <div className="select-seat">
-        {allSeats.seats.map((seat, index) =>
-          <Seats 
+        {allSeats.seats.map((seat, index) => (
+          <Seats
             array={seat}
             key={index}
-            state={setSelectedSeats}
+            selectedSeats={selectedSeats}
+            setSelectedSeats={setSelectedSeats}
+            selectedArray={selectedArray}
+            setSelectedArray={setSelectedArray}
           />
-        )}
+        ))}
       </div>
       <div className="subtitles">
         <div>
-          <div className="seat selected">
-          </div>
+          <div className="seat selected"></div>
           <p>Selecionado</p>
         </div>
         <div>
-          <div className="seat available">
-          </div>
+          <div className="seat available"></div>
           <p>Disponível</p>
         </div>
         <div>
-          <div className="seat unavailable">
-          </div>
+          <div className="seat unavailable"></div>
           <p>Indisponível</p>
         </div>
       </div>
       <div className="insert-data">
-        <p>
-          Nome do comprador:
-        </p>
-        <input 
-          type="text" 
-          placeholder="Digite seu nome..." 
+        <p>Nome do comprador:</p>
+        <input
+          type="text"
+          placeholder="Digite seu nome..."
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
-        <p>
-          CPF do comprador:
-        </p>
-        <input 
-          type="text" 
-          placeholder="Digite seu CPF..." 
+        <p>CPF do comprador:</p>
+        <input
+          type="text"
+          placeholder="Digite seu CPF..."
           value={userDocument}
           onChange={(e) => setUserDocument(e.target.value)}
         />
       </div>
       <Link to="/sucesso">
-        <button 
-          className="save-seats" 
-          onClick={sendBuyerData}
-        >
+        <button className="save-seats" onClick={sendBuyerData}>
           Reservar assento(s)
         </button>
       </Link>
       <footer>
         <div className="selected-poster">
-          <img 
-            src={allSeats.movie.posterURL} 
-            alt={`Poster do filme ${allSeats.movie.title}`} 
+          <img
+            src={allSeats.movie.posterURL}
+            alt={`Poster do filme ${allSeats.movie.title}`}
           />
         </div>
         <div>
-          <p>
-            {allSeats.movie.title}
-          </p>
+          <p>{allSeats.movie.title}</p>
           <p>
             {allSeats.day.weekday} - {allSeats.name}
           </p>

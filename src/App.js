@@ -12,6 +12,7 @@ import Success from './Success/Success';
 function App() {
 
   const [confirmation, setConfirmation] = useState({});
+  const [selectedArray, setSelectedArray] = useState([]);
 
   return (
     <BrowserRouter>
@@ -24,13 +25,16 @@ function App() {
           <Film />
         </Route>
         <Route path="/assentos/:idSession" exact>
-          <Session 
-            setConfirmation={setConfirmation} 
+          <Session
+            setConfirmation={setConfirmation}
+            selectedArray={selectedArray}
+            setSelectedArray={setSelectedArray}
           />
         </Route>
         <Route path="/sucesso" exact>
           <Success 
             confirmation={confirmation} 
+            selectedArray={selectedArray} 
           />
         </Route>
       </Switch>
