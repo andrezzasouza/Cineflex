@@ -1,7 +1,7 @@
 import './session.css'
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, useHistory, Link  } from 'react-router-dom';
 import Seats from './Seats';
 
 export default function Session ( { setConfirmation, selectedArray, setSelectedArray} ) {
@@ -13,6 +13,8 @@ export default function Session ( { setConfirmation, selectedArray, setSelectedA
 
   const [username, setUsername] = useState("");
   const [userDocument, setUserDocument] = useState("");
+
+  const history = useHistory();
 
   useEffect(() => {
     const promise = axios.get(
@@ -35,7 +37,8 @@ export default function Session ( { setConfirmation, selectedArray, setSelectedA
   function errorMessage() {
     alert("Favor selecionar os assentos e preencher os dados para completar o pedido.")
   }
-  
+
+
 
   function sendBuyerData() {
     const orderedSeats = selectedSeats.sort((a, b) => a - b);
@@ -55,18 +58,25 @@ export default function Session ( { setConfirmation, selectedArray, setSelectedA
       cpf: userDocument,
     };
 
-    setConfirmation(order);
+    function Success(response) {
+      if (response.status === 200) {
+        console.log("s", response);
+        setConfirmation(order);
+        setUsername("");
+        setUserDocument("");
+        setSelectedSeats([]);
+        history.push("/sucesso");
+      }
+    }
 
     function failure (response) {
-      console.log("f", response)
+      console.log("f", response);
     }
+
     console.log(reservation)
     const promise = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v3/cineflex/seats/book-many', reservation)
-    // promise.then(success)
-    promise.catch(failure)
-    setUsername("");
-    setUserDocument("");
-    setSelectedSeats([]);
+    promise.then(Success)
+    promise.catch(failure)  
   }
 
   return (
@@ -117,17 +127,13 @@ export default function Session ( { setConfirmation, selectedArray, setSelectedA
         />
       </div>
       {canOrder ? (
-        <Link to="/sucesso">
-          <button className="save-seats" onClick={sendBuyerData}>
-            Reservar assento(s)
-          </button>
-        </Link>
+        <button className="save-seats" onClick={sendBuyerData}>
+          Reservar assento(s)
+        </button>
       ) : (
-        <>
-          <button className="save-seats" onClick={errorMessage}>
-            Reservar assento(s)
-          </button>
-        </>
+        <button className="save-seats" onClick={errorMessage}>
+          Reservar assento(s)
+        </button>
       )}
       <footer>
         <div className="selected-poster">
