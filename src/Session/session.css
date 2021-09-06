@@ -1,5 +1,5 @@
 .session-container {
-  margin: 108px 16px 136px 24px;
+  margin: 108px 16px 130px 24px;
   font-size: 24px;
   line-height: 28px;
   letter-spacing: 0.04em;
@@ -51,7 +51,7 @@
 .subtitles {
   display: flex;
   justify-content: space-evenly;
-  margin-bottom: 42px;
+  margin: 6px 0 42px;
 }
 
 .subtitles p {
@@ -70,7 +70,7 @@
 input {
   font-family: 'Roboto', sans-serif;
   width: 327px;
-  height: 51px;
+  height: 50px;
   background: #FFFFFF;
   border: 1px solid #D5D5D5;
   border-radius: 3px;

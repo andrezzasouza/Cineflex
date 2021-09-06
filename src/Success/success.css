@@ -17,7 +17,7 @@
   display: flex;
   align-items: center;
   letter-spacing: 0.04em;
-  margin: 0;
+  margin: 0 0 8px;
 }
 .success-container p {
   font-size: 22px;
@@ -42,5 +42,5 @@
 .success-container button {
   width: 225px;
   height: 42px;
-  margin: 42px calc((100% - 225px) /2) 0;
+  margin: 92px calc((100% - 225px) /2) 0;
 }
