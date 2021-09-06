@@ -6,6 +6,10 @@ export default function Seats({
   setSelectedSeats,
   selectedArray,
   setSelectedArray,
+  setCanOrder,
+  orderCheck,
+  username,
+  userDocument
 }) {
   let seatStatus = array.isAvailable;
   console.log("seats", array)
@@ -25,6 +29,7 @@ export default function Seats({
 
       const newSelection = Number(e.target.innerText);
       setSelectedArray([...selectedArray, newSelection]);
+      setCanOrder(orderCheck);
     } else {
       setCurrentState(`seat`);
       const removeReservation = selectedSeats.filter(el => el !== seat);
@@ -32,7 +37,7 @@ export default function Seats({
 
       const removeSelection = selectedArray.filter(el => el !== Number(e.target.innerText));
       setSelectedArray(removeSelection);
-      
+      setCanOrder(orderCheck);
     }
   }
 

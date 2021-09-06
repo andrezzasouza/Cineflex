@@ -16,6 +16,10 @@ export default function Session ( { setConfirmation, selectedArray, setSelectedA
 
   const history = useHistory();
 
+  const [canOrder, setCanOrder] = useState(false)
+
+  const orderCheck = selectedSeats.length > 0 && username.length > 0 && userDocument.length > 0;
+
   useEffect(() => {
     const promise = axios.get(
       `https://mock-api.bootcamp.respondeai.com.br/api/v3/cineflex/showtimes/${idSession}/seats`
@@ -32,15 +36,14 @@ export default function Session ( { setConfirmation, selectedArray, setSelectedA
     return "Loading...";
   }
 
-  const canOrder = selectedSeats.length > 0 && username.length > 0 && userDocument.length > 0;
+  // const canOrder = selectedSeats.length > 0 && username.length > 0 && userDocument.length > 0;
 
   function errorMessage() {
     alert("Favor selecionar os assentos e preencher os dados para completar o pedido.")
   }
 
-
-
   function sendBuyerData() {
+    setCanOrder(orderCheck);
     const orderedSeats = selectedSeats.sort((a, b) => a - b);
   
     const reservation = {
@@ -58,7 +61,7 @@ export default function Session ( { setConfirmation, selectedArray, setSelectedA
       cpf: userDocument,
     };
 
-    function Success(response) {
+    function success(response) {
       if (response.status === 200) {
         console.log("s", response);
         setConfirmation(order);
@@ -75,7 +78,7 @@ export default function Session ( { setConfirmation, selectedArray, setSelectedA
 
     console.log(reservation)
     const promise = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v3/cineflex/seats/book-many', reservation)
-    promise.then(Success)
+    promise.then(success)
     promise.catch(failure)  
   }
 
@@ -93,6 +96,10 @@ export default function Session ( { setConfirmation, selectedArray, setSelectedA
             setSelectedSeats={setSelectedSeats}
             selectedArray={selectedArray}
             setSelectedArray={setSelectedArray}
+            setCanOrder={setCanOrder}
+            orderCheck={orderCheck}
+            username={username}
+            userDocument={userDocument}
           />
         ))}
       </div>
@@ -116,25 +123,25 @@ export default function Session ( { setConfirmation, selectedArray, setSelectedA
           type="text"
           placeholder="Digite seu nome..."
           value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          onChange={(e) => {
+            setUsername(e.target.value);
+            setCanOrder(orderCheck);
+          }}
         />
         <p>CPF do comprador:</p>
         <input
           type="text"
           placeholder="Digite seu CPF..."
           value={userDocument}
-          onChange={(e) => setUserDocument(e.target.value)}
+          onChange={(e) => {
+            setUserDocument(e.target.value);
+            setCanOrder(orderCheck);
+          }}
         />
       </div>
-      {canOrder ? (
-        <button className="save-seats" onClick={sendBuyerData}>
+        <button className="save-seats" onClick={canOrder ? sendBuyerData : errorMessage}>
           Reservar assento(s)
         </button>
-      ) : (
-        <button className="save-seats" onClick={errorMessage}>
-          Reservar assento(s)
-        </button>
-      )}
       <footer>
         <div className="selected-poster">
           <img
