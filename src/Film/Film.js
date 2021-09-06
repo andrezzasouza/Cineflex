@@ -16,7 +16,6 @@ export default function Film () {
     );
 
     promise.then(res => {
-      console.log("resdata", res.data)
       setFilmData({...res.data});
     })
   }, []);
@@ -24,8 +23,6 @@ export default function Film () {
   if(filmData === null) {
 		return "Loading...";
 	}
-
-  // console.log("data", data)
 
   return (
     <div className="film-container">

@@ -1,7 +1,7 @@
 import './success.css';
 import { Link } from 'react-router-dom';
 
-export default function Success ( { confirmation, selectedArray, setSelectedArray }) {
+export default function Success ( { confirmation, setSelectedArray }) {
 
   const seatsArray = confirmation.seats.sort((a, b) => a - b);
 
@@ -11,7 +11,6 @@ export default function Success ( { confirmation, selectedArray, setSelectedArra
     setSelectedArray([]);
   }
 
-  console.log("conf", confirmation)  
   return (
     <div className="success-container">
       <div className="success-message">

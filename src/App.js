@@ -32,7 +32,6 @@ function App() {
         <Route path="/sucesso" exact>
           <Success
             confirmation={confirmation}
-            selectedArray={selectedArray}
             setSelectedArray={setSelectedArray}
           />
         </Route>

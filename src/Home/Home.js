@@ -4,9 +4,6 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
-// FilmPoster precisa receber um link e uma imagem pra renderizar com o map
-// O axios pode estar aqui?
-
 export default function Home () {
 
   const [film, setFilm] = useState([]);
