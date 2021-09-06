@@ -7,8 +7,6 @@ import Film from './Film/Film';
 import Session from './Session/Session';
 import Success from './Success/Success';
 
-
-
 function App() {
 
   const [confirmation, setConfirmation] = useState({});

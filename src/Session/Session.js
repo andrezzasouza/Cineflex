@@ -30,6 +30,11 @@ export default function Session ( { setConfirmation, selectedArray, setSelectedA
     return "Loading...";
   }
 
+  const canOrder = selectedSeats.length > 0 && username.length > 0 && userDocument.length > 0;
+
+  function errorMessage() {
+    alert("Favor selecionar os assentos e preencher os dados para completar o pedido.")
+  }
   
 
   function sendBuyerData() {
@@ -50,15 +55,18 @@ export default function Session ( { setConfirmation, selectedArray, setSelectedA
       cpf: userDocument,
     };
 
-    setConfirmation(order)
+    setConfirmation(order);
 
+    function failure (response) {
+      console.log("f", response)
+    }
     console.log(reservation)
     const promise = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v3/cineflex/seats/book-many', reservation)
-    // limpar campos
+    // promise.then(success)
+    promise.catch(failure)
     setUsername("");
     setUserDocument("");
     setSelectedSeats([]);
-      //limpa os assentos selecionados também ou não faz diferença?
   }
 
   return (
@@ -108,11 +116,19 @@ export default function Session ( { setConfirmation, selectedArray, setSelectedA
           onChange={(e) => setUserDocument(e.target.value)}
         />
       </div>
-      <Link to="/sucesso">
-        <button className="save-seats" onClick={sendBuyerData}>
-          Reservar assento(s)
-        </button>
-      </Link>
+      {canOrder ? (
+        <Link to="/sucesso">
+          <button className="save-seats" onClick={sendBuyerData}>
+            Reservar assento(s)
+          </button>
+        </Link>
+      ) : (
+        <>
+          <button className="save-seats" onClick={errorMessage}>
+            Reservar assento(s)
+          </button>
+        </>
+      )}
       <footer>
         <div className="selected-poster">
           <img

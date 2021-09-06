@@ -17,9 +17,9 @@ export default function FilmTime ( {array} ) {
         <h3>{`${array.weekday} - ${array.date}`}</h3>
       </div>
       <div>
-        {array.showtimes.map((hours) => (
+        {array.showtimes.map((hours, index) => (
           <Link to={`/assentos/${hours.id}`}>
-            <Button hours={hours.name} />
+            <Button hours={hours.name} key={index} />
           </Link>
         ))}
       </div>

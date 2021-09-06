@@ -19,17 +19,15 @@ export default function Home () {
   })
   }, []);
 
-  
-
   return (
     <div className="home-container">
       <div>
         <h2>Selecione o filme</h2>
       </div>
       <main>
-        {film.map(poster => 
+        {film.map((poster, index) => 
           <Link to={`/sessoes/${poster.id}`}>
-            <FilmPoster img={poster.posterURL} alt={poster.title} key={poster.id} />
+            <FilmPoster img={poster.posterURL} alt={poster.title} key={index} />
           </Link>
         )}
       </main>

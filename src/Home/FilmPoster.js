@@ -1,10 +1,9 @@
-// pegar imagem do axios por props?
-// pegar link por props?
+export default function FilmPoster ({ img, alt }) {
 
-export default function FilmPoster (props) {
+
   return (
       <div className="poster-container">
-        <img src={props.img} alt={`Poster do filme ${props.alt}`} />
+        <img src={img} alt={`Poster do filme ${alt}`} />
       </div>
   );
 }

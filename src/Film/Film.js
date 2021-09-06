@@ -35,8 +35,8 @@ export default function Film () {
         </h2>
       </div>
       <div className="time-container">
-        {filmData.days.map(sessions =>
-          <FilmTime array={sessions} />
+        {filmData.days.map((sessions, index) =>
+          <FilmTime array={sessions} key={index} />
         )}
       </div>
       <footer>
